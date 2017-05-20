@@ -26,8 +26,13 @@ Task Init {
 
 Task Test -Depends Init  {
     $lines
+    
+    if (!(Test-Path -Path $ProjectRoot\Tests)) {
+      return
+    }
+    
     $PSVersion = $PSVersionTable.PSVersion.Major
-    "`n`tSTATUS: Testing with PowerShell $PSVersion"
+    "Running Pester tests with PowerShell $PSVersion"
 
     $TestResults = Invoke-Pester -Path $ProjectRoot\Tests -PassThru -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile"
 
@@ -49,12 +54,16 @@ Task Build -Depends StaticCodeAnalysis, Test {
     $lines
     
     if ($ENV:BHBuildSystem -eq 'AppVeyor') {
-      # Load the module, read the exported functions, update the psd1 FunctionsToExport
+      "Updating module psd1 - FunctionsToExport"
       Set-ModuleFunctions
 
       # Bump the module version
-      if ($ENV:packageVersion) { 
-        Update-Metadata -Path $env:BHPSModuleManifest -Value $ENV:packageVersion
+      if ($ENV:PackageVersion) { 
+        "Updating module psd1 version to $($ENV:PackageVersion)"
+        Update-Metadata -Path $env:BHPSModuleManifest -Value $ENV:PackageVersion
+      } 
+      else {
+        "Not updating module psd1 version - no env:PackageVersion set"
       }
     }
 }
@@ -63,6 +72,7 @@ Task StaticCodeAnalysis {
     if ($ENV:BHBuildSystem -eq 'AppVeyor') {
         Add-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Running
     }
+    "Running PSScriptAnalyzer"
     $Results = Invoke-ScriptAnalyzer -Path $ProjectRoot -Recurse -Settings "$PSScriptRoot\PPoShScriptingStyle.psd1"
     if ($Results) {
         $ResultString = $Results | Out-String
