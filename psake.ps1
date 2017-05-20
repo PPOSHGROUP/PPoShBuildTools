@@ -53,6 +53,11 @@ Task Test -Depends Init  {
 Task Build -Depends StaticCodeAnalysis, Test {
     $lines
     
+    # Import-Module to check everything's ok
+    $buildDetails = Get-BuildVariables
+    $projectName = Join-Path ($BuildDetails.ProjectPath) (Get-ProjectName)
+    Import-Module -Name $projectName -Force
+    
     if ($ENV:BHBuildSystem -eq 'AppVeyor') {
       "Updating module psd1 - FunctionsToExport"
       Set-ModuleFunctions
@@ -65,7 +70,7 @@ Task Build -Depends StaticCodeAnalysis, Test {
       else {
         "Not updating module psd1 version - no env:PackageVersion set"
       }
-    }
+    #}
 }
 
 Task StaticCodeAnalysis {
@@ -77,7 +82,7 @@ Task StaticCodeAnalysis {
     if ($Results) {
         $ResultString = $Results | Out-String
         Write-Warning $ResultString
-        If($ENV:BHBuildSystem -eq 'AppVeyor') {
+        if ($ENV:BHBuildSystem -eq 'AppVeyor') {
             Add-AppveyorMessage -Message "PSScriptAnalyzer output contained one or more result(s) with 'Error' severity.`
             Check the 'Tests' tab of this build for more details." -Category Error
             Update-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Failed -ErrorMessage $ResultString
