@@ -59,7 +59,7 @@ Task StaticCodeAnalysis {
     if ($ENV:BHBuildSystem -eq 'AppVeyor') {
         Add-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Running
     }
-    $Results = Invoke-ScriptAnalyzer -Path $ProjectRoot -Recurse -Settings "$ProjectRoot\PPoShScriptingStyle.psd1"
+    $Results = Invoke-ScriptAnalyzer -Path $ProjectRoot -Recurse -Settings "$PSScriptRoot\PPoShScriptingStyle.psd1"
     if ($Results) {
         $ResultString = $Results | Out-String
         Write-Warning $ResultString
