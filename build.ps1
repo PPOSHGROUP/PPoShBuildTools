@@ -24,6 +24,12 @@ else {
 
 ### Install build dependencies if required
 $dependencies = Get-Dependency
+if ($dependencies) { 
+  "Build dependencies: $($dependencies.DependencyName -join ', ')"
+} 
+else {
+  "No build dependencies"
+}  
 $needInvokePSDepend = $false
 foreach ($dep in $dependencies) {
     $moduleVersions = Get-Module -Name $dep.DependencyName -ListAvailable | `
@@ -37,6 +43,9 @@ foreach ($dep in $dependencies) {
 if ($needInvokePSDepend) { 
     "Installing build dependencies"
     Invoke-PSDepend -Force -Verbose
+} 
+else {
+    "Dependencies don't need updating"
 }
 
 ### Install project dependencies
