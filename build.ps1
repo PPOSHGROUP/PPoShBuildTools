@@ -26,11 +26,12 @@ else {
 $dependencies = Get-Dependency
 if ($dependencies) { 
   "Build dependencies: $($dependencies.DependencyName -join ', ')"
+  $needInvokePSDepend = $false
 } 
 else {
   "No build dependencies"
+  $needInvokePSDepend = $true
 }  
-$needInvokePSDepend = $false
 foreach ($dep in $dependencies) {
     $moduleVersions = Get-Module -Name $dep.DependencyName -ListAvailable | `
         Select-Object -ExpandProperty Version | `
