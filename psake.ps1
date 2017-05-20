@@ -70,7 +70,7 @@ Task Build -Depends StaticCodeAnalysis, Test {
       else {
         "Not updating module psd1 version - no env:PackageVersion set"
       }
-    #}
+    }
 }
 
 Task StaticCodeAnalysis {
