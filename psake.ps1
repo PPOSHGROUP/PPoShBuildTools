@@ -48,11 +48,15 @@ Task Test -Depends Init  {
 Task Build -Depends StaticCodeAnalysis, Test {
     $lines
     
-    # Load the module, read the exported functions, update the psd1 FunctionsToExport
-    Set-ModuleFunctions
+    if ($ENV:BHBuildSystem -eq 'AppVeyor') {
+      # Load the module, read the exported functions, update the psd1 FunctionsToExport
+      Set-ModuleFunctions
 
-    # Bump the module version
-    Update-Metadata -Path $env:BHPSModuleManifest
+      # Bump the module version
+      if ($ENV:packageVersion) { 
+        Update-Metadata -Path $env:BHPSModuleManifest -Value $ENV:packageVersion
+      }
+    }
 }
 
 Task StaticCodeAnalysis {
