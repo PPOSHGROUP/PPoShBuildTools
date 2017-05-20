@@ -17,6 +17,6 @@ Tests <-- optional, put your Pester tests here
     * Build version format -> change it from `1.0.0.{build}` to `{build}`
     * Custom configuration .yml file name -> put `https://raw.githubusercontent.com/PPOSHGROUP/PPoShBuildTools/master/appveyor.yml`
 4. That's it, every commit to your repository will trigger a build that packages your module and runs tests and static code analysis. When you create a tag, it will also be published to Powershell Gallery (with version = tag name). 
-5. Don't forget to check `Include tags` during push (after tagging) and 'Recursive' during first pull.
+5. Remember to check `Include tags` during push (after tagging) and 'Recursive' during first pull.
 
 If you have any issues, look at a working example at [PPoShTools repository](https://github.com/PPOSHGROUP/PPoShTools).
