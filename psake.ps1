@@ -50,7 +50,7 @@ Task Test -Depends Init  {
     "`n"
 }
 
-Task Build -Depends StaticCodeAnalysis, Test {
+Task Build -Depends Test, StaticCodeAnalysis {
     $lines
     
     # Import-Module to check everything's ok
