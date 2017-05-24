@@ -23,7 +23,7 @@ else {
 }
 
 ### Install build dependencies if required
-$dependencies = Get-Dependency
+$dependencies = Get-Dependency -Path "$PSScriptRoot\build.depend.psd1"
 if ($dependencies) { 
   "Build dependencies: $($dependencies.DependencyName -join ', ')"
   $needInvokePSDepend = $false
@@ -43,7 +43,7 @@ foreach ($dep in $dependencies) {
 }
 if ($needInvokePSDepend) { 
     "Installing build dependencies"
-    Invoke-PSDepend -Force -Verbose
+    Invoke-PSDepend -Path "$PSScriptRoot\build.depend.psd1" -Force -Verbose
 } 
 else {
     "Dependencies don't need updating"
