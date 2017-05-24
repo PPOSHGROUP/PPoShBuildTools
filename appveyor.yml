@@ -7,8 +7,7 @@ environment:
   GithubAuthToken:
     secure: gN4n/aBQ95awEEv4QPGlV810lNHSqFpxFmXCCTj31wSpvadZ8SMtH9PrxlTYyb9j
 
-# Allow WMF5 (i.e. PowerShellGallery functionality)
-os: WMF 5
+image: Visual Studio 2017
 
 skip_commits:
   files:
