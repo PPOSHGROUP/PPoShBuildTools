@@ -50,13 +50,11 @@ Task Test -Depends Init  {
     "`n"
 }
 
-Task Build -Depends Test, StaticCodeAnalysis {
+Task Build -Depends Test, StaticCodeAnalysis, RegenerateWiki {
     $lines
     
     # Import-Module to check everything's ok
-    $buildDetails = Get-BuildVariables
-    $projectName = Join-Path ($BuildDetails.ProjectPath) (Get-ProjectName)
-    Import-Module -Name $projectName -Force
+    Import-Module -Name $env:BHPSModuleManifest -Force
     
     if ($ENV:BHBuildSystem -eq 'AppVeyor') {
       "Updating module psd1 - FunctionsToExport"
@@ -99,4 +97,21 @@ Task StaticCodeAnalysis {
             Update-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Passed
         }
     }
+}
+
+Task RegenerateWiki {
+    # this is only for local runs
+    if ($ENV:BHBuildSystem -eq 'AppVeyor') {
+        return
+    }
+
+    $wikiPath = "$ProjectRoot\..\PPoShTools.wiki"
+    if (!(Test-Path -Path $wikiPath)) {
+        "Directory '$wikiPath' does not exist - if you clone it, it will be regenerated automatically during local build"
+        return
+    }
+
+    New-MarkdownDoc -ModulePath $env:BHModulePath `
+        -OutputPath "$wikiPath\api" `
+        -GitBaseUrl 'https://github.com/PPOSHGROUP/PPoShTools/blob/master/PPoShTools'
 }
