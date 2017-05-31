@@ -57,7 +57,7 @@ if (Test-Path -Path $projectRequirementsFile) {
 }
 
 ### Run psake
-"Setting build environment"
+"Setting build environment to $PSScriptRoot\.."
 Set-BuildEnvironment -Path "$PSScriptRoot\.." -Force
 "Starting psake build"
 Invoke-psake -buildFile "$PSScriptRoot\psake.ps1" -nologo

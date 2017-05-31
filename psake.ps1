@@ -105,13 +105,15 @@ Task RegenerateWiki {
         return
     }
 
-    $wikiPath = "$ProjectRoot\..\PPoShTools.wiki"
+    $wikiPath = "$ProjectRoot\..\$($env:BHProjectName).wiki"
     if (!(Test-Path -Path $wikiPath)) {
         "Directory '$wikiPath' does not exist - if you clone it, it will be regenerated automatically during local build"
         return
     }
 
+    # make sure you're in folder with propert casing (e.g. you've run 'cd c:\work\PPoshTools' instead of 'cd c:\work\pposhtools',
+    # otherwise git links might break
     New-MarkdownDoc -ModulePath $env:BHModulePath `
         -OutputPath "$wikiPath\api" `
-        -GitBaseUrl 'https://github.com/PPOSHGROUP/PPoShTools/blob/master/PPoShTools'
+        -GitBaseUrl "https://github.com/PPOSHGROUP/$($env:BHProjectName)/blob/master/$($env:BHProjectName)"
 }
