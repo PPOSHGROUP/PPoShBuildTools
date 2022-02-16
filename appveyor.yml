@@ -5,7 +5,7 @@ environment:
   PSGalleryNugetApiKey:
     secure: wH1ALRNiAuiA7dS5i4I5dPsQzuoCuV0yHf7Pe/HQn8BOJ/5wSdNqy4aa+N7J2kbn
   GithubAuthToken:
-    secure: gN4n/aBQ95awEEv4QPGlV810lNHSqFpxFmXCCTj31wSpvadZ8SMtH9PrxlTYyb9j
+    secure: Xa7ReJCYo5zNoco1lja9hTiNPCu6U5vwduT/vlw+G7JbG+O0642I+GPuJHom93G9
 
 image: Visual Studio 2017
 
