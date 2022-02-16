@@ -3,7 +3,7 @@
 #Publish to PowerShell Gallery with this key
 environment:
   PSGalleryNugetApiKey:
-    secure: wH1ALRNiAuiA7dS5i4I5dPsQzuoCuV0yHf7Pe/HQn8BOJ/5wSdNqy4aa+N7J2kbn
+    secure: UEJCVvipRNhpNU4Q1ca0YnQWcVgOxQf+GkShl3JDRB2Fy0M0q6DGKPU9l7IDAyM5
   GithubAuthToken:
     secure: Xa7ReJCYo5zNoco1lja9hTiNPCu6U5vwduT/vlw+G7JbG+O0642I+GPuJHom93G9
 
